@@ -4,16 +4,13 @@ import ui from '../data/ui.json';
 export default function handler(req, res) {
   const { theme, domain, key, local_version } = req.query;
 
-  if (!theme || !domain || !key) {
-    return res.json({ valid: false, ui });
-  }
+  if (!theme || !domain || !key) return res.json({ valid: false, ui });
 
-  const themeLicenses = licenses[theme];
-  if (!themeLicenses) {
-    return res.json({ valid: false, ui });
-  }
+  const cleanDomain = domain.replace(/^www\./, '');
 
-  const site = themeLicenses[domain];
+  if (!licenses[theme]) return res.json({ valid: false, ui });
+
+  const site = licenses[theme][cleanDomain];
 
   if (
     site &&
