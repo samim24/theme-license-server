@@ -8,9 +8,9 @@
     },
     "trendnewsbd.top": {
       "key": "PAID-BN24-999",
-      "license": "free",
+      "license": "paid",
       "status": "active",
-      "version": 2
+      "version": 3
     }
   },
   "newspro-theme": {
