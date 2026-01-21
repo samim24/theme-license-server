@@ -10,10 +10,9 @@
       "key": "PAID-BN24-999",
       "license": "paid",
       "status": "active",
-      "version": 5
+      "version": 1
     }
   },
-
   "newspro-theme": {
     "abc.com": {
       "key": "FREE-NP-456",
