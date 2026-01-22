@@ -5,7 +5,7 @@ export default async function(req,res){
 
   if(!token) return res.json({ valid:false });
 
-  const url = "https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/theme-license-server/main/licenses.json?ts="+Date.now();
+  const url = "https://raw.githubusercontent.com/samim24/theme-license-server/main/licenses.json?ts="+Date.now();
   const db = await fetch(url).then(r=>r.json());
 
   const lic = db?.themes?.[theme]?.[domain];
