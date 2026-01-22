@@ -1,9 +1,10 @@
 import fetch from "node-fetch";
 
-function normalizeDomain(domain) {
-  return domain
+function normalize(d) {
+  return d
     .replace(/^https?:\/\//, '')
     .replace(/^www\./, '')
+    .replace(/:\d+$/, '')
     .replace(/\/$/, '')
     .toLowerCase();
 }
@@ -15,33 +16,41 @@ export default async function handler(req, res) {
     return res.json({ valid: false, reason: "missing_data" });
   }
 
-  domain = normalizeDomain(domain);
+  domain = normalize(domain);
   token = token.trim();
 
   try {
     const githubUrl =
       "https://raw.githubusercontent.com/samim24/theme-licenses/main/licenses.json";
 
-    const response = await fetch(githubUrl + "?t=" + Date.now());
+    const response = await fetch(githubUrl + '?v=' + Date.now());
     const data = await response.json();
 
-    const domainData = data.domains[domain];
+    let matchedDomain = null;
 
-    if (!domainData) {
-      return res.json({ valid: false, reason: "domain_not_found" });
+    // 🔑 IMPORTANT PART (THIS FIXES YOUR ISSUE)
+    for (const d in data.domains) {
+      if (normalize(d) === domain) {
+        matchedDomain = data.domains[d];
+        break;
+      }
     }
 
-    if (domainData.token !== token) {
+    if (!matchedDomain) {
+      return res.json({ valid: false, reason: "domain_not_found", domain });
+    }
+
+    if (matchedDomain.token !== token) {
       return res.json({ valid: false, reason: "token_mismatch" });
     }
 
-    if (domainData.status !== "active") {
+    if (matchedDomain.status !== "active") {
       return res.json({ valid: false, reason: "domain_inactive" });
     }
 
     return res.json({
       valid: true,
-      type: domainData.type,
+      type: matchedDomain.type,
       footer_credit: data.footer_credit,
       admin_notice: data.admin_notice
     });
