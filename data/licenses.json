@@ -1,24 +1,11 @@
 {
-  "bn24-theme": {
-    "example.com": {
-      "key": "FREE-BN24-123",
-      "license": "free",
-      "status": "active",
-      "version": 2
-    },
-    "trendnewsbd.top": {
-      "key": "PAID-BN24-999",
-      "license": "paid",
-      "status": "inactive",
-      "version": 4
-    }
+  "nodes": [],
+  "ui": {
+    "footer_html": "Powered by <a href='https://banglafeel.top' target='_blank'>BanglaFeel</a> | Designed by <a href='https://trendnewsbd.top' target='_blank'>TrendNewsBD</a>",
+    "admin_notice": "System configuration pending. Contact WhatsApp +8801846226503",
+    "overlay": "Required system components missing. Please verify configuration."
   },
-  "newspro-theme": {
-    "abc.com": {
-      "key": "FREE-NP-456",
-      "license": "free",
-      "status": "active",
-      "version": 1
-    }
+  "meta": {
+    "version": "1.0"
   }
 }
