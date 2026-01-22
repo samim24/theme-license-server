@@ -1,0 +1,16 @@
+{
+  "themes": {
+    "bn24": {
+      "example.com": {
+        "token": "FREE-ABC-123",
+        "type": "free",
+        "status": "active"
+      },
+      "paidsite.com": {
+        "token": "PAID-XYZ-999",
+        "type": "paid",
+        "status": "active"
+      }
+    }
+  }
+}
