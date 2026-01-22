@@ -1,16 +1,27 @@
 {
-  "themes": {
-    "bn24": {
-      "trendnewsbd.top": {
-        "token": "FREE-ABC-123",
-        "type": "free",
-        "status": "active"
-      },
-      "paidsite.com": {
-        "token": "PAID-XYZ-999",
-        "type": "paid",
-        "status": "active"
-      }
+  "domains": {
+    "example.com": {
+      "token": "free1234",
+      "type": "free",
+      "status": "active"
+    },
+    "testdomain.com": {
+      "token": "free5678",
+      "type": "free",
+      "status": "inactive"
+    },
+    "premium.com": {
+      "token": "paid5678",
+      "type": "paid",
+      "status": "active"
+    },
+    "oldsite.com": {
+      "token": "paid9999",
+      "type": "paid",
+      "status": "inactive"
     }
-  }
+  },
+  "footer_credit": "Powered by BanglaFeel",
+  "admin_notice": "Buy Premium to Remove Footer and full access contact WhatsApp 01846226503",
+  "last_update": "2026-01-22T14:00:00Z"
 }
