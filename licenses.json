@@ -2,7 +2,7 @@
   "domains": {
     "trendnewsbd.top": {
       "token": "free1234",
-      "type": "free",
+      "type": "paid",
       "status": "active"
     },
     "testdomain.com": {
