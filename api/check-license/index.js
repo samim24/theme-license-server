@@ -1,30 +1,52 @@
 import fetch from "node-fetch";
 
-export default async function handler(req, res) {
-  const { domain, token } = req.query;
+function normalizeDomain(domain) {
+  return domain
+    .replace(/^https?:\/\//, '')
+    .replace(/^www\./, '')
+    .replace(/\/$/, '')
+    .toLowerCase();
+}
 
-  if(!domain || !token) return res.status(400).json({ valid:false, message:"Missing domain or token" });
+export default async function handler(req, res) {
+  let { domain, token } = req.query;
+
+  if (!domain || !token) {
+    return res.json({ valid: false, reason: "missing_data" });
+  }
+
+  domain = normalizeDomain(domain);
+  token = token.trim();
 
   try {
-    const githubUrl = "https://raw.githubusercontent.com/samim24/theme-licenses/main/licenses.json";
-    const response = await fetch(githubUrl);
+    const githubUrl =
+      "https://raw.githubusercontent.com/samim24/theme-licenses/main/licenses.json";
+
+    const response = await fetch(githubUrl + "?t=" + Date.now());
     const data = await response.json();
 
     const domainData = data.domains[domain];
 
-    if(!domainData) return res.json({ valid:false, message:"Domain not registered" });
-    if(domainData.token !== token) return res.json({ valid:false, message:"Invalid token" });
+    if (!domainData) {
+      return res.json({ valid: false, reason: "domain_not_found" });
+    }
 
-    // Check domain active/inactive
-    const isActive = domainData.status === "active";
+    if (domainData.token !== token) {
+      return res.json({ valid: false, reason: "token_mismatch" });
+    }
+
+    if (domainData.status !== "active") {
+      return res.json({ valid: false, reason: "domain_inactive" });
+    }
 
     return res.json({
-      valid: isActive,
+      valid: true,
       type: domainData.type,
       footer_credit: data.footer_credit,
       admin_notice: data.admin_notice
     });
-  } catch(err){
-    return res.status(500).json({ valid:false, message:"Server error" });
+
+  } catch (e) {
+    return res.json({ valid: false, reason: "server_error" });
   }
 }
